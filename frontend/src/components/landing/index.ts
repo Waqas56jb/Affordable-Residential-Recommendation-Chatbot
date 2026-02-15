@@ -1,0 +1,8 @@
+export { HeroSection } from './HeroSection'
+export { StatsKPIs } from './StatsKPIs'
+export { FeaturesSection } from './FeaturesSection'
+export { UKQatarSection } from './UKQatarSection'
+export { HowItWorks } from './HowItWorks'
+export { ChartsSection } from './ChartsSection'
+export { FacilitiesSection } from './FacilitiesSection'
+export { CTASection } from './CTASection'
