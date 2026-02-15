@@ -5,7 +5,6 @@ import { HERO_SLIDES } from '@/constants/images'
 
 const ROTATE_INTERVAL_MS = 5000
 const textShadow = '0 2px 20px rgba(0,0,0,0.75)'
-const textShadowLight = '0 1px 4px rgba(255,255,255,0.4)'
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0)
