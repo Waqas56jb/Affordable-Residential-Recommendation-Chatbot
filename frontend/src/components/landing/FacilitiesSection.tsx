@@ -10,7 +10,9 @@ import {
   FaHospital,
   FaUniversity,
 } from 'react-icons/fa'
-import { LANDING_IMAGES } from '@/constants/images'
+import { LANDING_IMAGES, HERO_SLIDES } from '@/constants/images'
+
+const FALLBACK_IMAGE = HERO_SLIDES[0]
 
 const facilities = [
   { icon: FaMosque, title: 'Masjids & religious places', desc: 'Prayer facilities and Islamic centres nearby' },
@@ -43,24 +45,31 @@ export function FacilitiesSection() {
         </motion.div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {facilities.map((f, i) => (
-            <motion.div
+          {facilities.map((f, i) => {
+            const Icon = f.icon
+            return (
+              <motion.div
               key={f.title}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="flex items-start gap-4 p-5 rounded-2xl bg-white border-2 border-primary-100 hover:shadow-xl hover:shadow-primary-200/40 hover:border-primary-300 transition-all"
-            >
-              <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center text-white shadow-md">
-                <f.icon className="w-6 h-6" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-black">{f.title}</h3>
-                <p className="text-sm text-black mt-1">{f.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                className="flex items-start gap-4 p-5 rounded-2xl bg-white border-2 border-primary-100 hover:shadow-xl hover:shadow-primary-200/40 hover:border-primary-300 transition-all"
+              >
+                <div
+                  data-icon-box
+                  className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center shadow-md"
+                  style={{ backgroundColor: '#14b8a6', color: '#ffffff' }}
+                >
+                  <Icon size={24} style={{ color: 'inherit', flexShrink: 0 }} aria-hidden />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-black">{f.title}</h3>
+                  <p className="text-sm text-black mt-1">{f.desc}</p>
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
 
         <motion.div
@@ -70,21 +79,21 @@ export function FacilitiesSection() {
           className="grid sm:grid-cols-3 gap-6"
         >
           <div className="rounded-2xl overflow-hidden border border-primary-100 shadow-lg">
-            <img src={LANDING_IMAGES.mosque} alt="Mosque" className="w-full h-48 object-cover" />
+            <img src={LANDING_IMAGES.mosque} alt="Mosque" className="w-full h-48 object-cover" onError={(e) => { const t = e.currentTarget; if (t.src !== FALLBACK_IMAGE) t.src = FALLBACK_IMAGE }} />
             <div className="p-4 bg-white">
               <p className="font-semibold text-black">Religious & community</p>
               <p className="text-sm text-black">Masjids and Islamic centres</p>
             </div>
           </div>
           <div className="rounded-2xl overflow-hidden border border-primary-100 shadow-lg">
-            <img src={LANDING_IMAGES.gym} alt="Gym" className="w-full h-48 object-cover" />
+            <img src={LANDING_IMAGES.gym} alt="Gym" className="w-full h-48 object-cover" onError={(e) => { const t = e.currentTarget; if (t.src !== FALLBACK_IMAGE) t.src = FALLBACK_IMAGE }} />
             <div className="p-4 bg-white">
               <p className="font-semibold text-black">Fitness & wellness</p>
               <p className="text-sm text-black">Gyms and parks nearby</p>
             </div>
           </div>
           <div className="rounded-2xl overflow-hidden border border-primary-100 shadow-lg">
-            <img src={LANDING_IMAGES.shopping} alt="Shopping" className="w-full h-48 object-cover" />
+            <img src={LANDING_IMAGES.shopping} alt="Shopping" className="w-full h-48 object-cover" onError={(e) => { const t = e.currentTarget; if (t.src !== FALLBACK_IMAGE) t.src = FALLBACK_IMAGE }} />
             <div className="p-4 bg-white">
               <p className="font-semibold text-black">Shopping & stores</p>
               <p className="text-sm text-black">Malls and general stores</p>

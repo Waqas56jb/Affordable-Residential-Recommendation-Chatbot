@@ -43,10 +43,11 @@ export function Header() {
           <div className="flex items-center gap-3">
             <a
               href="#features"
-              className="hidden sm:inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl bg-primary-700 text-white shadow-md border border-primary-800 hover:bg-primary-800 transition-all duration-300"
+              className="hidden sm:inline-flex items-center justify-center gap-2 px-5 py-2.5 text-sm font-bold rounded-xl shadow-md border-2 border-primary-600 hover:opacity-90 transition-all duration-300"
+              style={{ backgroundColor: '#14b8a6', color: '#ffffff' }}
             >
               Get started
-              <HiArrowRight className="w-4 h-4" />
+              <HiArrowRight className="w-4 h-4" style={{ color: '#ffffff' }} />
             </a>
             <button
               type="button"
@@ -82,10 +83,11 @@ export function Header() {
               <a
                 href="#features"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 py-3 font-bold rounded-xl bg-primary-700 text-white border border-primary-800 mt-4"
+                className="flex items-center justify-center gap-2 py-3 font-bold rounded-xl border-2 border-primary-600 hover:opacity-90 mt-4"
+                style={{ backgroundColor: '#14b8a6', color: '#ffffff' }}
               >
                 Get started
-                <HiArrowRight className="w-4 h-4" />
+                <HiArrowRight className="w-4 h-4" style={{ color: '#ffffff' }} />
               </a>
             </div>
           </motion.div>

@@ -57,14 +57,14 @@ export function Footer() {
               {APP_CONFIG.tagline}. Find affordable, safe student housing near universities in the UK and Qatar — crime-free areas, halal food, cheap transport, and quality life.
             </p>
             <div className="space-y-2 text-sm">
-              <a href="mailto:hello@studentstay.com" className="flex items-center gap-2 text-primary-200 hover:text-white transition">
-                <HiMail className="w-5 h-5 flex-shrink-0" /> hello@studentstay.com
+              <a href="mailto:hello@studentstay.com" className="flex items-center gap-2 text-white hover:text-primary-200 transition">
+                <HiMail className="w-5 h-5 flex-shrink-0 text-white" aria-hidden /> hello@studentstay.com
               </a>
-              <a href="tel:+441234567890" className="flex items-center gap-2 text-primary-200 hover:text-white transition">
-                <HiPhone className="w-5 h-5 flex-shrink-0" /> +44 123 456 7890
+              <a href="tel:+441234567890" className="flex items-center gap-2 text-white hover:text-primary-200 transition">
+                <HiPhone className="w-5 h-5 flex-shrink-0 text-white" aria-hidden /> +44 123 456 7890
               </a>
-              <span className="flex items-center gap-2 text-primary-200">
-                <HiLocationMarker className="w-5 h-5 flex-shrink-0" /> UK & Qatar
+              <span className="flex items-center gap-2 text-white">
+                <HiLocationMarker className="w-5 h-5 flex-shrink-0 text-white" aria-hidden /> UK & Qatar
               </span>
             </div>
             <div className="flex gap-4 mt-6">
@@ -73,9 +73,9 @@ export function Footer() {
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-10 h-10 rounded-full bg-primary-800 flex items-center justify-center text-primary-200 hover:bg-primary-500 hover:text-white transition"
+                  className="w-10 h-10 rounded-full bg-primary-800 flex items-center justify-center text-white hover:bg-primary-500 hover:text-white transition"
                 >
-                  <s.icon className="w-5 h-5" />
+                  <s.icon className="w-5 h-5 text-white" aria-hidden />
                 </a>
               ))}
             </div>

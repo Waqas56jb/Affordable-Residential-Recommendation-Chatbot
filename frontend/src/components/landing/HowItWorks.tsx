@@ -56,7 +56,7 @@ export function HowItWorks() {
                 <div className="hidden lg:block absolute top-12 left-1/2 w-full h-0.5 bg-primary-200 -z-10" style={{ width: 'calc(100% + 2rem)', marginLeft: '1rem' }} />
               )}
               <div className="inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-xl shadow-primary-300/50 mb-6 mx-auto">
-                <step.icon className="w-12 h-12" />
+                <step.icon className="w-12 h-12 text-white" aria-hidden />
               </div>
               <div className="text-xl font-bold text-black mb-2">{step.title}</div>
               <p className="text-black text-sm leading-relaxed">{step.text}</p>

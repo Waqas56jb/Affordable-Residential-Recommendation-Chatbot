@@ -1,30 +1,30 @@
 import { motion } from 'framer-motion'
-import { HiOutlineAcademicCap, HiOutlineLocationMarker, HiOutlineShieldCheck, HiOutlineCurrencyPound } from 'react-icons/hi'
+import { IconUniversities, IconListings, IconSafety, IconBudget } from '@/assets/icons/KpiIcons'
 
 const kpis = [
   {
-    icon: HiOutlineAcademicCap,
+    Icon: IconUniversities,
     value: '50+',
     label: 'Universities covered',
     sub: 'UK & Qatar',
     gradient: 'from-primary-400 to-primary-600',
   },
   {
-    icon: HiOutlineLocationMarker,
+    Icon: IconListings,
     value: '1,200+',
     label: 'Verified listings',
     sub: 'Near campuses',
     gradient: 'from-primary-500 to-primary-700',
   },
   {
-    icon: HiOutlineShieldCheck,
+    Icon: IconSafety,
     value: '98%',
     label: 'Crime-free areas',
     sub: 'Safety-first',
     gradient: 'from-primary-500 to-primary-600',
   },
   {
-    icon: HiOutlineCurrencyPound,
+    Icon: IconBudget,
     value: '£400',
     label: 'Avg. from',
     sub: 'Budget options',
@@ -76,8 +76,12 @@ export function StatsKPIs() {
               whileHover={{ y: -4, scale: 1.02 }}
               className="bg-white rounded-2xl p-6 text-center border border-primary-100 shadow-lg shadow-primary-100/50 hover:shadow-xl hover:shadow-primary-200/50 transition-all duration-300"
             >
-              <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br ${k.gradient} text-white shadow-lg mb-3`}>
-                <k.icon className="w-7 h-7" />
+              <div
+                data-icon-box
+                className="inline-flex items-center justify-center w-14 h-14 rounded-xl shadow-lg mb-3"
+                style={{ backgroundColor: '#14b8a6', color: '#ffffff' }}
+              >
+                <k.Icon className="w-7 h-7 shrink-0" style={{ color: 'inherit' }} aria-hidden />
               </div>
               <div className="text-3xl sm:text-4xl font-bold text-black">{k.value}</div>
               <div className="font-semibold text-black mt-1">{k.label}</div>

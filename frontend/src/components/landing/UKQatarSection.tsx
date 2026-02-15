@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
 import { HiCheckCircle } from 'react-icons/hi'
-import { LANDING_IMAGES } from '@/constants/images'
+import { LANDING_IMAGES, HERO_SLIDES } from '@/constants/images'
+
+const FALLBACK_IMAGE = HERO_SLIDES[0]
 
 const ukPoints = [
   'Universities across England, Scotland, Wales & NI',
@@ -52,6 +54,7 @@ export function UKQatarSection() {
                 src={LANDING_IMAGES.london}
                 alt="UK student housing"
                 className="w-full h-full object-cover"
+                onError={(e) => { const t = e.currentTarget; if (t.src !== FALLBACK_IMAGE) t.src = FALLBACK_IMAGE }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-900/80 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
@@ -82,6 +85,7 @@ export function UKQatarSection() {
                 src={LANDING_IMAGES.doha}
                 alt="Qatar student housing"
                 className="w-full h-full object-cover"
+                onError={(e) => { const t = e.currentTarget; if (t.src !== FALLBACK_IMAGE) t.src = FALLBACK_IMAGE }}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-900/80 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4">
