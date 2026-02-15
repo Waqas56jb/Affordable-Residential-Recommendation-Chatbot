@@ -5,7 +5,7 @@ import { HERO_SLIDES } from '@/constants/images'
 
 const ROTATE_INTERVAL_MS = 5000
 const textShadow = '0 2px 20px rgba(0,0,0,0.75)'
-const HEADLINE_WORDS = 'Best place to live near your university'.split(' ')
+const textShadowLight = '0 1px 4px rgba(255,255,255,0.4)'
 
 export function HeroSection() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -32,8 +32,13 @@ export function HeroSection() {
               alt=""
               className="absolute inset-0 w-full h-full object-cover object-center"
               fetchPriority={i === 0 ? 'high' : undefined}
+              loading={i === 0 ? 'eager' : 'lazy'}
             />
-            <div className="absolute inset-0 bg-black/50" aria-hidden />
+            <div
+              className="absolute inset-0"
+              style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0.15) 100%)' }}
+              aria-hidden
+            />
           </div>
         ))}
       </div>
@@ -52,34 +57,58 @@ export function HeroSection() {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.4 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 border border-white/40 text-white text-xs font-semibold uppercase tracking-widest"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/20 border border-white/40 text-xs font-semibold uppercase tracking-widest"
               style={{ textShadow }}
             >
               <HiAcademicCap className="w-3.5 h-3.5 text-primary-300" />
-              UK & Qatar students
+              {['UK', '&', 'Qatar', 'students'].map((word, i) => (
+                <span key={i} className={i % 2 === 0 ? 'text-white' : 'text-black'}>{word}</span>
+              ))}
             </motion.span>
 
             <h1
-              className="flex flex-wrap justify-center gap-x-3 sm:gap-x-4 gap-y-2 text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight text-white"
-              style={{ textShadow }}
+              className="text-center text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-black leading-tight tracking-tight"
             >
-              {HEADLINE_WORDS.map((word, i) => (
-                <motion.span
-                  key={`${word}-${i}`}
-                  initial={{ opacity: 0, x: 48 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 100,
-                    damping: 16,
-                    delay: i * 0.055,
-                    opacity: { duration: 0.2 },
-                  }}
-                  className="inline-block whitespace-nowrap"
-                >
-                  {word}
-                </motion.span>
-              ))}
+              <motion.span
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.4 }}
+                className="block"
+              >
+                {['Find', 'the', 'best', 'place', 'to', 'live'].map((word, i) => (
+                  <span
+                    key={i}
+                    className={i % 2 === 0 ? 'text-black' : 'text-white'}
+                    style={{
+                      textShadow: i % 2 === 0
+                        ? '0 0 16px rgba(255,255,255,0.95), 0 1px 3px rgba(255,255,255,0.9)'
+                        : '0 0 20px rgba(255,255,255,0.8), 0 1px 4px rgba(0,0,0,0.4)',
+                    }}
+                  >
+                    {word}{' '}
+                  </span>
+                ))}
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.35, duration: 0.4 }}
+                className="block font-black"
+              >
+                {['near', 'your', 'university'].map((word, i) => (
+                  <span
+                    key={i}
+                    className={i % 2 === 0 ? 'text-black' : 'text-white'}
+                    style={{
+                      textShadow: i % 2 === 0
+                        ? '0 0 16px rgba(255,255,255,0.95), 0 1px 3px rgba(255,255,255,0.9)'
+                        : '0 0 20px rgba(255,255,255,0.8), 0 1px 4px rgba(0,0,0,0.4)',
+                    }}
+                  >
+                    {word}{' '}
+                  </span>
+                ))}
+              </motion.span>
             </h1>
 
             <motion.p
