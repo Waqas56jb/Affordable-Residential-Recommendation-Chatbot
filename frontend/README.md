@@ -49,3 +49,4 @@ Use `@/` for `src/`:
 Create `.env` and set:
 
 - `VITE_API_BASE_URL` – backend API base URL (default: `/api`, proxied to backend in dev)
+- `VITE_STAYAPI_API_KEY` – [StayAPI](https://stayapi.com) key for live accommodation search on the dashboard (get a key to enable real-time hotel/hostel search)

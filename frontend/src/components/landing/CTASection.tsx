@@ -17,7 +17,7 @@ export function CTASection() {
             Join thousands of UK and Qatar students who found affordable, safe, and convenient housing near their university.
           </p>
           <motion.a
-            href="#features"
+            href="/login"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-3 rounded-full font-bold text-lg px-8 py-4 shadow-lg transition-all duration-300 hover:shadow-xl"

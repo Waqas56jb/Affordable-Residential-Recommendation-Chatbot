@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { HiMail, HiPhone, HiLocationMarker } from 'react-icons/hi'
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from 'react-icons/fa'
-import { ROUTES } from '@/routes'
 import { APP_CONFIG } from '@/config'
 import { LANDING_IMAGES } from '@/constants/images'
 
@@ -49,7 +48,7 @@ export function Footer() {
             viewport={{ once: true }}
             className="lg:col-span-2"
           >
-            <Link to={ROUTES.HOME} className="flex items-center gap-2 mb-4">
+            <Link to="/" className="flex items-center gap-2 mb-4">
               <img src={LANDING_IMAGES.logo} alt={APP_CONFIG.appName} className="w-12 h-12 object-contain brightness-0 invert opacity-90" />
               <span className="text-2xl font-bold text-white">{APP_CONFIG.appName}</span>
             </Link>

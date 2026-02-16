@@ -7,7 +7,13 @@
     @apply antialiased scroll-smooth;
   }
   body {
-    @apply bg-white text-black;
+    @apply bg-white text-gray-900;
+    background-color: #ffffff;
+    color: #111827;
+  }
+  /* Ensure content is never invisible */
+  #root {
+    min-height: 100vh;
   }
 }
 

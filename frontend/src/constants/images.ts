@@ -31,3 +31,10 @@ export const LANDING_IMAGES = {
   mapPin: `${U}/photo-1486299267070-83823f5448dd?w=800&q=80`,
 } as const
 
+// Auth pages – left panel: unique HD/8K-style image per page (w=2560, q=95)
+export const AUTH_IMAGES = {
+  login: `${U}/photo-1486299267070-83823f5448dd?w=2560&q=95&fit=crop`,
+  signup: `${U}/photo-1564013799919-ab600027ffc6?w=2560&q=95&fit=crop`,
+  forgotPassword: `${U}/photo-1513635269975-59663e0ac1ad?w=2560&q=95&fit=crop`,
+} as const
+
