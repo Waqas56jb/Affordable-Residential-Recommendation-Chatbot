@@ -1,7 +1,14 @@
 import { useState, useEffect } from 'react'
 import { MapContainer, TileLayer, Rectangle, Popup, useMap } from 'react-leaflet'
 import { motion, AnimatePresence } from 'framer-motion'
-import { HiShieldCheck, HiChartBar, HiCalendar, HiExclamation } from 'react-icons/hi'
+import {
+  HiShieldCheck,
+  HiChartBar,
+  HiCalendar,
+  HiExclamation,
+  HiMap,
+  HiTrendingUp,
+} from 'react-icons/hi'
 import * as crimeApi from '@/services/crime'
 import type { CrimeGridCell, CrimeGridResponse } from '@/services/crime'
 import 'leaflet/dist/leaflet.css'
@@ -24,11 +31,11 @@ function FlyToBounds({ bounds }: { bounds: [[number, number], [number, number]] 
 }
 
 function getCellColor(count: number, maxCount: number): string {
-  if (maxCount <= 0) return 'rgb(34 197 94)' // green
+  if (maxCount <= 0) return 'rgb(34 197 94)'
   const p = count / maxCount
-  if (p >= 0.66) return 'rgb(220 38 38)' // red – high
-  if (p >= 0.33) return 'rgb(234 179 8)' // yellow – moderate
-  return 'rgb(34 197 94)' // green – low
+  if (p >= 0.66) return 'rgb(220 38 38)'
+  if (p >= 0.33) return 'rgb(234 179 8)'
+  return 'rgb(34 197 94)'
 }
 
 function formatCategory(cat: string): string {
@@ -78,33 +85,57 @@ export function CheckCrimePage() {
     : []
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <header className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 flex items-center gap-2">
-            <HiShieldCheck className="w-8 h-8 text-rose-600" />
-            Check Crime in UK
-          </h1>
-          <p className="mt-1 text-slate-600">
-            Entire UK map from local dataset. Red = high crime, yellow = moderate, green = low or no crime.
-          </p>
-        </header>
+    <div className="min-h-screen min-w-0 overflow-x-hidden bg-gradient-to-b from-slate-50 via-white to-teal-50/30">
+      {/* Hero header – same theme as rest of site */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-teal-50/50 border-b border-slate-100">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(20,184,166,0.12),transparent)]" aria-hidden />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-6">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+          >
+            <div>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold bg-teal-100 text-teal-800">
+                <HiShieldCheck className="w-4 h-4" />
+                UK crime overview
+              </span>
+              <h1 className="mt-3 text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-slate-900">
+                Check Crime in the UK
+              </h1>
+              <p className="mt-1.5 text-slate-600 max-w-2xl">
+                View reported incidents by month on an interactive map. Data is from our local dataset — historical, not live. Red = higher incidence, yellow = moderate, green = lower.
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <aside className="lg:col-span-4 space-y-4">
-            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-              <div className="p-4 border-b border-slate-100">
-                <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-                  <HiCalendar className="w-4 h-4" />
-                  Month (dataset)
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full min-w-0">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 min-w-0">
+          {/* Sidebar */}
+          <aside className="lg:col-span-4 space-y-5 order-2 lg:order-1">
+            {/* Month selector card */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-200/80 overflow-hidden"
+            >
+              <div className="px-5 py-4 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 border-b border-slate-100">
+                <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                  <HiCalendar className="w-4 h-4 text-teal-600" />
+                  Select month
                 </h2>
+                <p className="mt-0.5 text-xs text-slate-500">Dataset is grouped by month</p>
               </div>
-              <div className="p-4">
+              <div className="p-5">
                 <select
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
                   disabled={loadingMonths}
-                  className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-slate-800 focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50/50 px-4 py-3 text-slate-800 font-medium focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 focus:bg-white transition"
                 >
                   {months.length === 0 && (
                     <option value="">{loadingMonths ? 'Loading…' : 'No months'}</option>
@@ -116,80 +147,153 @@ export function CheckCrimePage() {
                   ))}
                 </select>
                 {error && (
-                  <p className="mt-2 text-sm text-rose-600 flex items-center gap-1">
-                    <HiExclamation className="w-4 h-4" />
-                    {error}
-                  </p>
+                  <div className="mt-3 flex items-center gap-2 rounded-xl bg-rose-50 border border-rose-100 px-3 py-2">
+                    <HiExclamation className="w-4 h-4 text-rose-500 flex-shrink-0" />
+                    <p className="text-sm text-rose-700">{error}</p>
+                  </div>
                 )}
               </div>
-            </div>
+            </motion.div>
 
             <AnimatePresence>
               {data && (
                 <motion.div
-                  initial={{ opacity: 0, y: 8 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="space-y-4"
+                  transition={{ delay: 0.1 }}
+                  className="space-y-5"
                 >
-                  <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-                    <HiChartBar className="w-4 h-4" />
-                    KPIs
-                  </h2>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="bg-white rounded-xl shadow-md border border-slate-100 p-4">
-                      <p className="text-xs font-medium text-slate-500 uppercase">Total incidents</p>
-                      <p className="mt-1 text-2xl font-bold text-slate-800">{data.total.toLocaleString()}</p>
+                  {/* KPI cards */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-200/80 p-5"
+                    >
+                      <div className="flex items-center gap-2 text-slate-500 mb-1">
+                        <HiTrendingUp className="w-4 h-4 text-teal-500" />
+                        <span className="text-xs font-semibold uppercase tracking-wider">Total incidents</span>
+                      </div>
+                      <p className="text-2xl sm:text-3xl font-bold text-slate-900 tabular-nums">
+                        {data.total.toLocaleString()}
+                      </p>
+                    </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.05 }}
+                      className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-200/80 p-5"
+                    >
+                      <div className="flex items-center gap-2 text-slate-500 mb-1">
+                        <HiMap className="w-4 h-4 text-teal-500" />
+                        <span className="text-xs font-semibold uppercase tracking-wider">Grid cells</span>
+                      </div>
+                      <p className="text-2xl sm:text-3xl font-bold text-slate-900 tabular-nums">
+                        {data.grid.length.toLocaleString()}
+                      </p>
+                    </motion.div>
+                  </div>
+
+                  {/* By category */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15 }}
+                    className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-200/80 overflow-hidden"
+                  >
+                    <div className="px-5 py-4 bg-gradient-to-r from-teal-500/10 to-emerald-500/10 border-b border-slate-100">
+                      <h2 className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                        <HiChartBar className="w-4 h-4 text-teal-600" />
+                        By category
+                      </h2>
                     </div>
-                    <div className="bg-white rounded-xl shadow-md border border-slate-100 p-4">
-                      <p className="text-xs font-medium text-slate-500 uppercase">Grid cells</p>
-                      <p className="mt-1 text-2xl font-bold text-slate-800">{data.grid.length.toLocaleString()}</p>
+                    <div className="p-4 max-h-52 overflow-y-auto">
+                      <ul className="space-y-2">
+                        {topCategories.map(([cat, count]) => (
+                          <li
+                            key={cat}
+                            className="flex justify-between items-center py-2 px-3 rounded-xl bg-slate-50/80 hover:bg-slate-100/80 transition"
+                          >
+                            <span className="text-sm text-slate-700 truncate mr-2">
+                              {formatCategory(cat)}
+                            </span>
+                            <span className="text-sm font-bold text-slate-900 tabular-nums flex-shrink-0">
+                              {count.toLocaleString()}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
-                  </div>
-                  <div className="bg-white rounded-xl shadow-md border border-slate-100 p-4">
-                    <p className="text-xs font-medium text-slate-500 uppercase mb-2">By category</p>
-                    <ul className="space-y-1.5 max-h-48 overflow-y-auto">
-                      {topCategories.map(([cat, count]) => (
-                        <li key={cat} className="flex justify-between text-sm">
-                          <span className="text-slate-700 truncate mr-2">{formatCategory(cat)}</span>
-                          <span className="font-semibold text-slate-900 flex-shrink-0">{count.toLocaleString()}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="rounded-xl bg-slate-100 p-3 text-xs text-slate-600">
-                    <p className="font-medium text-slate-700">Legend</p>
-                    <p><span className="inline-block w-3 h-3 rounded bg-red-500 mr-1" /> Red = high crime</p>
-                    <p><span className="inline-block w-3 h-3 rounded bg-yellow-500 mr-1" /> Yellow = moderate</p>
-                    <p><span className="inline-block w-3 h-3 rounded bg-green-500 mr-1" /> Green = low / no crime</p>
-                  </div>
+                  </motion.div>
+
+                  {/* Legend */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="bg-white rounded-2xl shadow-lg shadow-slate-200/50 border border-slate-200/80 p-5"
+                  >
+                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+                      Map legend
+                    </p>
+                    <div className="space-y-2.5">
+                      <div className="flex items-center gap-3">
+                        <span className="w-4 h-4 rounded-md bg-red-500 shadow-inner" />
+                        <span className="text-sm text-slate-700">Higher reported incidents</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="w-4 h-4 rounded-md bg-amber-400 shadow-inner" />
+                        <span className="text-sm text-slate-700">Moderate</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="w-4 h-4 rounded-md bg-emerald-500 shadow-inner" />
+                        <span className="text-sm text-slate-700">Lower / no crime</span>
+                      </div>
+                    </div>
+                    <p className="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
+                      Reported data only. Not a live feed or safety guarantee.
+                    </p>
+                  </motion.div>
                 </motion.div>
               )}
             </AnimatePresence>
           </aside>
 
-          <div className="lg:col-span-8">
-            <div className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden">
-              <div className="p-3 border-b border-slate-100 flex items-center justify-between">
-                <span className="text-sm font-semibold text-slate-600 flex items-center gap-2">
-                  <HiCalendar className="w-4 h-4" />
+          {/* Map */}
+          <div className="lg:col-span-8 order-1 lg:order-2 min-w-0">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.08 }}
+              className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/80 overflow-hidden min-w-0"
+            >
+              <div className="px-5 py-4 bg-gradient-to-r from-teal-500 to-emerald-600 flex items-center justify-between">
+                <span className="text-sm font-semibold text-white flex items-center gap-2">
+                  <HiMap className="w-5 h-5" />
                   {selectedMonth || 'Select month'} · UK map
                 </span>
-                {loading && <span className="text-xs text-slate-400">Loading…</span>}
+                {loading && (
+                  <span className="inline-flex items-center gap-1.5 text-white/90 text-xs font-medium">
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                    Loading…
+                  </span>
+                )}
               </div>
-              <div className="h-[500px] relative">
+              <div className="h-[380px] sm:h-[420px] lg:h-[520px] relative min-h-[320px]">
                 <MapContainer
+                  key="crime-uk-map"
                   center={UK_CENTER}
                   zoom={UK_ZOOM}
-                  className="w-full h-full"
-                  style={{ minHeight: 500 }}
+                  className="w-full h-full rounded-b-2xl"
+                  style={{ minHeight: 320 }}
+                  scrollWheelZoom={true}
                 >
                   <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
                   <FlyToBounds bounds={UK_BOUNDS} />
-                  {/* Green base: UK area (no crime / low emphasis) */}
                   <Rectangle
                     bounds={UK_BOUNDS}
                     pathOptions={{
@@ -199,7 +303,6 @@ export function CheckCrimePage() {
                       weight: 0,
                     }}
                   />
-                  {/* Crime grid cells: red / yellow / green by count */}
                   {data?.grid.map((cell: CrimeGridCell, i: number) => {
                     const bounds: [[number, number], [number, number]] = [
                       [cell.lat - HALF, cell.lng - HALF],
@@ -213,7 +316,7 @@ export function CheckCrimePage() {
                         pathOptions={{
                           fillColor: fill,
                           fillOpacity: 0.65,
-                          color: 'rgba(0,0,0,0.15)',
+                          color: 'rgba(0,0,0,0.12)',
                           weight: 0.5,
                         }}
                         eventHandlers={{
@@ -227,14 +330,15 @@ export function CheckCrimePage() {
                         }}
                       >
                         <Popup>
-                          <span className="font-semibold">{cell.count}</span> incident{cell.count !== 1 ? 's' : ''} in this area
+                          <span className="font-semibold">{cell.count}</span> incident
+                          {cell.count !== 1 ? 's' : ''} in this area
                         </Popup>
                       </Rectangle>
                     )
                   })}
                 </MapContainer>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

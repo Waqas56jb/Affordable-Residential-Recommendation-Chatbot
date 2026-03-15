@@ -27,3 +27,12 @@
   stroke: currentColor;
   color: inherit;
 }
+
+/* Animated chat icon (chatbot widget) */
+@keyframes chat-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-3px) scale(1.03); }
+}
+.animate-chat-float {
+  animation: chat-float 2.5s ease-in-out infinite;
+}

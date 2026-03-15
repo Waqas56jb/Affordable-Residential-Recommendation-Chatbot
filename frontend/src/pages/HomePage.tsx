@@ -7,7 +7,7 @@ import { LANDING_IMAGES } from '@/constants/images'
 // String paths to avoid circular dependency (HomePage is imported by routes)
 const MODULES = [
   {
-    to: '/explore',
+    to: '/',
     title: 'Explore UK & Qatar',
     description: 'Features, universities, safety, transport and everything you need to choose where to live.',
     icon: HiAcademicCap,
@@ -133,7 +133,7 @@ export function HomePage() {
             <HiArrowRight className="w-5 h-5" />
           </a>
           <Link
-            to="/explore"
+            to="/"
             className="inline-flex items-center hover:text-teal-600 font-medium transition-colors"
             style={{ color: '#475569' }}
           >

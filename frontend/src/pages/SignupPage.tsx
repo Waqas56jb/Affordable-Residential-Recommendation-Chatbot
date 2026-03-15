@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { HiMail, HiLockClosed, HiUser, HiArrowRight } from 'react-icons/hi'
 import { ROUTES } from '@/routes'
 import { AUTH_IMAGES } from '@/constants/images'
 import { AuthPanel } from '@/components/auth/AuthPanel'
+import { signup, setAuthUser, getAuthUser, getRedirectAfterLogin, setRedirectAfterLogin } from '@/services/auth'
 
 const formVariants = {
   hidden: { opacity: 0 },
@@ -24,10 +25,33 @@ export function SignupPage() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const user = getAuthUser()
+  if (user) {
+    const target = getRedirectAfterLogin() || ROUTES.DASHBOARD
+    setRedirectAfterLogin(null)
+    return <Navigate to={target} replace />
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    navigate(ROUTES.DASHBOARD)
+    setError('')
+    setLoading(true)
+    try {
+      const res = await signup(name, email, password)
+      if (res.success && res.user) {
+        setAuthUser(res.user)
+        const target = getRedirectAfterLogin() || ROUTES.DASHBOARD
+        setRedirectAfterLogin(null)
+        navigate(target, { replace: true })
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Sign up failed')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -117,15 +141,21 @@ export function SignupPage() {
                   </div>
                   <p className="text-xs text-black/70 mt-1">Use at least 8 characters.</p>
                 </motion.div>
+                {error && (
+                  <motion.div variants={fieldVariants} className="mb-4 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
+                    {error}
+                  </motion.div>
+                )}
                 <motion.div variants={fieldVariants}>
                   <motion.button
                     type="submit"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full py-3.5 rounded-xl font-bold text-base shadow-md inline-flex items-center justify-center gap-2 transition focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                    disabled={loading}
+                    whileHover={!loading ? { scale: 1.02 } : undefined}
+                    whileTap={!loading ? { scale: 0.98 } : undefined}
+                    className="w-full py-3.5 rounded-xl font-bold text-base shadow-md inline-flex items-center justify-center gap-2 transition focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:opacity-70"
                     style={{ backgroundColor: '#14b8a6', color: '#ffffff' }}
                   >
-                    Create account
+                    {loading ? 'Creating account…' : 'Create account'}
                     <HiArrowRight className="w-5 h-5" style={{ color: '#ffffff' }} />
                   </motion.button>
                 </motion.div>
@@ -139,7 +169,10 @@ export function SignupPage() {
               className="mt-6 text-center text-sm text-black"
             >
               Already have an account?{' '}
-              <Link to={ROUTES.LOGIN} className="font-semibold text-black hover:underline">
+              <Link
+                to={ROUTES.LOGIN}
+                className="font-semibold text-black hover:underline"
+              >
                 Sign in
               </Link>
             </motion.p>

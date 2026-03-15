@@ -14,7 +14,8 @@ export const HERO_SLIDES = [
 
 // Landing images – use same working Unsplash IDs as hero where possible to avoid 404s
 export const LANDING_IMAGES = {
-  logo: 'https://img.icons8.com/fluency/96/22c55e/student-male--v1.png',
+  logo: 'https://img.icons8.com/fluency/96/14b8a6/cottage.png',
+  logoChat: 'https://img.icons8.com/fluency/96/14b8a6/chatbot.png',
   hero: HERO_SLIDES[0],
   heroUK: `${U}/photo-1513635269975-59663e0ac1ad?w=1920&q=90`,
   heroQatar: `${U}/photo-1513635269975-59663e0ac1ad?w=1920&q=90`,

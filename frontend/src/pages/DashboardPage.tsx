@@ -10,6 +10,7 @@ import {
   HiExternalLink,
   HiFilter,
   HiX,
+  HiHome,
 } from 'react-icons/hi'
 import { ROUTES } from '@/routes'
 import {
@@ -222,12 +223,15 @@ export function DashboardPage() {
                 Search student-friendly accommodation in the UK & Qatar. Real-time availability and prices.
               </p>
             </div>
-            <Link
-              to={ROUTES.HOME}
-              className="inline-flex items-center gap-2 text-primary-200 hover:text-white text-sm font-medium transition"
-            >
-              ← Back to home
-            </Link>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+              <Link
+                to={ROUTES.HOME}
+                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:px-5 sm:py-3 text-sm font-bold rounded-xl sm:rounded-2xl bg-gradient-to-r from-teal-500 via-teal-600 to-emerald-600 text-white shadow-lg shadow-teal-500/30 hover:shadow-xl hover:shadow-teal-500/40 transition-all border border-teal-400/30"
+              >
+                <HiHome className="w-5 h-5 flex-shrink-0" />
+                Back to home
+              </Link>
+            </motion.div>
           </motion.div>
         </div>
       </div>
