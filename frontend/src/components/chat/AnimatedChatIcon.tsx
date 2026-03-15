@@ -4,9 +4,6 @@
  */
 import { memo, useId } from 'react'
 
-const teal = '#14b8a6'
-const white = '#ffffff'
-
 interface AnimatedChatIconProps {
   className?: string
   size?: number
