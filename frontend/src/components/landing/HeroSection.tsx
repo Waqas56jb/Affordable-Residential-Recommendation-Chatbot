@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiArrowDown, HiAcademicCap } from 'react-icons/hi'
 import { HERO_SLIDES } from '@/constants/images'
@@ -120,17 +121,20 @@ export function HeroSection() {
               Safe, affordable housing · Halal food · Great transport. Compare by safety, cost & distance to campus.
             </motion.p>
 
-            <motion.a
-              href="/login"
+            <motion.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.35 }}
-              className="inline-flex items-center justify-center gap-2 min-w-[180px] px-6 py-3 rounded-xl font-bold text-base shadow-xl border-2 border-primary-400 hover:scale-105 active:scale-100 transition-all duration-200"
-              style={{ backgroundColor: '#14b8a6', color: '#ffffff' }}
             >
-              Get started
-              <HiArrowDown className="w-5 h-5" style={{ color: '#ffffff' }} />
-            </motion.a>
+              <Link
+                to="/login"
+                className="inline-flex items-center justify-center gap-2 min-w-[180px] px-6 py-3 rounded-xl font-bold text-base shadow-xl border-2 border-primary-400 hover:scale-105 active:scale-100 transition-all duration-200"
+                style={{ backgroundColor: '#14b8a6', color: '#ffffff' }}
+              >
+                Get started
+                <HiArrowDown className="w-5 h-5" style={{ color: '#ffffff' }} />
+              </Link>
+            </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>

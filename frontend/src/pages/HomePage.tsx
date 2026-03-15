@@ -124,14 +124,14 @@ export function HomePage() {
       {/* CTA strip */}
       <section className="border-t border-gray-200" style={{ backgroundColor: '#f8fafc' }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a
-            href="/login"
+          <Link
+            to="/login"
             className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-bold text-white shadow-lg hover:opacity-95 transition-opacity"
             style={{ backgroundColor: '#14b8a6' }}
           >
             Get started
             <HiArrowRight className="w-5 h-5" />
-          </a>
+          </Link>
           <Link
             to="/"
             className="inline-flex items-center hover:text-teal-600 font-medium transition-colors"

@@ -9,7 +9,26 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const BACKEND_ROOT = path.resolve(__dirname, '../..')
+
+/** Backend root: where 2025-12 etc. live. On Vercel, serverless cwd is often the project (backend) root. */
+function getBackendRoot() {
+  const fromDirname = path.resolve(__dirname, '../..')
+  if (fs.existsSync(fromDirname)) {
+    try {
+      const entries = fs.readdirSync(fromDirname, { withFileTypes: true })
+      if (entries.some((e) => e.isDirectory() && /^\d{4}-\d{2}$/.test(e.name))) return fromDirname
+    } catch (_) {}
+  }
+  const fromCwd = process.cwd()
+  if (fs.existsSync(fromCwd)) {
+    try {
+      const entries = fs.readdirSync(fromCwd, { withFileTypes: true })
+      if (entries.some((e) => e.isDirectory() && /^\d{4}-\d{2}$/.test(e.name))) return fromCwd
+    } catch (_) {}
+  }
+  return fromDirname
+}
+const BACKEND_ROOT = getBackendRoot()
 const GRID_SIZE = 0.03
 const UK_BOUNDS = { latMin: 49.8, latMax: 60.9, lngMin: -8.6, lngMax: 1.8 }
 
