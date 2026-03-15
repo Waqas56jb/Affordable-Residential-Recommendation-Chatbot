@@ -1,8 +1,9 @@
 /**
  * Map API client. All calls go to backend /api/map (real-time OSM/Nominatim/Overpass/OSRM).
  */
+import { APP_CONFIG } from '@/config'
 
-const BASE = '/api/map'
+const BASE = `${APP_CONFIG.apiBaseUrl.replace(/\/$/, '')}/map`
 
 export interface GeocodeResult {
   lat: number

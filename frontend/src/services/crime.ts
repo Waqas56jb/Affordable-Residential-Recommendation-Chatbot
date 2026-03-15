@@ -1,8 +1,9 @@
 /**
- * UK Crime dataset API (local backend). No external police API.
+ * UK Crime dataset API (backend). No external police API.
  */
+import { APP_CONFIG } from '@/config'
 
-const BASE = '/api/crime'
+const BASE = `${APP_CONFIG.apiBaseUrl.replace(/\/$/, '')}/crime`
 
 export interface CrimeGridCell {
   lat: number
