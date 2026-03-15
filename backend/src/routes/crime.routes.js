@@ -24,14 +24,15 @@ router.get('/months', (req, res) => {
 /**
  * GET /api/crime/grid?month=2025-12
  * Returns grid aggregation for the UK map: cells with lat, lng, count; total; byCategory; maxCount.
+ * Loads from local files or from GitHub raw URLs when deployed.
  */
-router.get('/grid', (req, res) => {
+router.get('/grid', async (req, res) => {
   try {
     const month = req.query.month
     if (!month || !/^\d{4}-\d{2}$/.test(month)) {
       return res.status(400).json({ error: 'Query param month=YYYY-MM is required' })
     }
-    const data = getCrimeGridAndStats(month)
+    const data = await getCrimeGridAndStats(month)
     return res.json(data)
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Failed to load crime grid' })
